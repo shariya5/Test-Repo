@@ -6,13 +6,14 @@ A comprehensive Laravel-based system for managing organizations, teams, and empl
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Features](#features)
- - [API Management with Sanctum](#api-management-with-sanctum)
-   - [Role And Access](#role-information)
+  - [API Management with Sanctum](#api-management-with-sanctum)
+  - [Role-Based Access Control and Authentication](#role-based-access-control-and-authentication)
   - [Eloquent Relationships & Data Aggregation](#eloquent-relationships--data-aggregation)
   - [Event-Driven Architecture & Background Processing](#event-driven-architecture--background-processing)
   - [PDF Reporting Package](#pdf-reporting-package)
   - [Performance Optimization](#performance-optimization)
 - [API Documentation](#api-documentation)
+  - [Role and Access](#role-and-access)
   - [Authentication](#authentication)
     - [Register](#register)
     - [Login](#login)
@@ -21,9 +22,11 @@ A comprehensive Laravel-based system for managing organizations, teams, and empl
   - [Teams](#teams)
   - [Employees](#employees)
   - [Reports](#reports)
+  - [Employee Data Import & Salary Update Logs](#employee-data-import--salary-update-logs)
 - [Testing](#testing)
 - [Performance Monitoring](#performance-monitoring)
 - [Contributing](#contributing)
+
 
 ---
 
@@ -106,6 +109,14 @@ QUEUE_CONNECTION=database
 ---
 
 ## Features
+### Role-Based Access Control and Authentication
+### API Management with Sanctum
+### Eloquent Relationships & Data Aggregation
+### Event-Driven Architecture & Background Processing
+### PDF Reporting Package
+### Performance Optimization And Monitoring 
+
+
 ### API Management with Sanctum
 A comprehensive RESTful API with Laravel Sanctum authentication and role-based access control:
 - Complete CRUD operations for organizations, teams, and employees.
@@ -114,6 +125,26 @@ A comprehensive RESTful API with Laravel Sanctum authentication and role-based a
 - API versioning support.
 
 API endpoints can be accessed using the appropriate authentication tokens and follow RESTful conventions.
+
+### Role-Based Access Control and Authentication
+
+**Role-Based Access:**
+
+- **Admin:**  
+  Full access to organizations, teams, employees, and reports (reports are view-only).
+
+- **Manager:**  
+  Restricted access with full permissions only for employees and limited access for teams.
+
+**Authentication:**
+
+- Endpoints for user registration, login, and logout.
+- Uses Laravel Sanctum for secure API token management.
+
+**Default Role:**
+
+- If no `role_id` is provided during registration, the system assigns the default role (Manager).
+
 ### Eloquent Relationships & Data Aggregation
 The system implements advanced Eloquent relationships between Organizations, Teams, and Employees:
 - **Organizations:** Can have multiple teams.
@@ -126,21 +157,6 @@ The system implements advanced Eloquent relationships between Organizations, Tea
 3. Custom Eloquent scopes for filtering employees by start date
 4. Optimized queries for large datasets
 
-**Usage:**
-```php
-// Get organization with teams and employees
-$organization = Organization::with(['teams.employees'])->find($id);
-
-// Get average salary per team
-$teamSalaryReport = Team::withAvgSalary()->get();
-
-// Get total employees per organization
-$organizationEmployeeCount = Organization::withEmployeeCount()->get();
-
-// Filter employees by start date
-$recentEmployees = Employee::startedAfter('2023-01-01')->get();
-```
-
 ### Event-Driven Architecture & Background Processing
 The system implements Laravel's event system for various operations:
 - JSON employee data import processing in the background.
@@ -149,15 +165,6 @@ The system implements Laravel's event system for various operations:
 - Error handling and user notifications.
 - Event-based salary update logging.
 
-**Usage:**
-```php
-// Import employees from JSON
-$importer = new EmployeeImporter($jsonData);
-EmployeeImportEvent::dispatch($importer);
-
-// The system will process the import in the background and notify users of progress
-```
-
 ### PDF Reporting Package
 A custom Laravel package for generating PDF employee reports:
 - Reusable Laravel package structure.
@@ -165,16 +172,6 @@ A custom Laravel package for generating PDF employee reports:
 - Multiple export options.
 - Easy integration with the main application.
 
-**Usage:**
-```php
-// Generate PDF employee report
-$report = EmployeeReportPDF::create()
-    ->forTeam($teamId)
-    ->withSalaryData()
-    ->generate();
-
-return response()->download($report);
-```
 
 ### Performance Optimization
 Database and system optimizations for handling large datasets:
@@ -182,8 +179,7 @@ Database and system optimizations for handling large datasets:
 - Query optimization techniques.
 - Laravel Telescope integration for monitoring.
 - Performance benchmarking tools.
-
----
+- 
 
 ## API Documentation
 
@@ -1745,6 +1741,7 @@ This documentation outlines the process of generating, importing, and tracking e
 This endpoint provides a list view of the salary update logs.
 
 ---
+```
 
 ## Testing
 
