@@ -1619,6 +1619,131 @@ GET /api/v1/reports/organizations/headcount
 }
   ```
 
+```markdown
+# Employee Data Import & Salary Update Logs
+
+This documentation outlines the process of generating, importing, and tracking employee data as well as monitoring salary updates.
+
+---
+
+## 1. Employee Data Generation
+
+- **Endpoint:**  
+  `GET http://127.0.0.1:8000/api/v1/import`
+
+- **Description:**  
+  This endpoint generates 50,000 employee records under various teams and exports the data to a JSON file.
+
+- **Output File Location:**  
+  `public\exports\employee_data.json`
+
+---
+
+## 2. Employee Data Import (Event-Driven)
+
+- **Endpoint:**  
+  `GET http://127.0.0.1:8000/api/v1/employees/import`
+
+- **Description:**  
+  After generating the JSON file, hit this endpoint to insert the employee data into the system using an event-driven architecture (event, listener, job, queue).
+
+- **Response Example:**
+  ```json
+  {
+      "success": true,
+      "data": {
+          "progress_url": "http://127.0.0.1:8000/api/v1/employees/import/status/5"
+      },
+      "message": "Your import has been queued and will be processed shortly"
+  }
+  ```
+
+- **Process Tracking:**  
+  The import process tracks the status of the job as it is processed.
+
+---
+
+## 3. Import Status Tracking
+
+- **Endpoint:**  
+  `GET http://127.0.0.1:8000/api/v1/employees/import/status/5`
+
+- **Description:**  
+  Retrieve the current status of the import job by its ID.
+
+- **Response Example:**
+  ```json
+  {
+      "success": true,
+      "data": {
+          "id": 5,
+          "user_id": 1,
+          "file_path": "imports/fnVlUDF2FPaY8UR7YXNMOxBshib04HFZCcuAGhZl.json",
+          "status": "completed",
+          "job_id": "29d3f47a-40e3-4d50-b93e-f97e911dbe23",
+          "total_records": 1000,
+          "processed_records": 2000,
+          "failed_records": 0,
+          "error_message": null,
+          "created_at": "2025-03-26T05:39:59.000000Z",
+          "updated_at": "2025-03-26T05:40:47.000000Z"
+      },
+      "message": "Import Status"
+  }
+  ```
+
+- **Progress Notification:**  
+  The system sends progress notifications after every 10% of records processed.
+
+---
+
+## 4. Import Completion & Failure Notifications
+
+- **Notification Endpoints:**
+  - **Success Notification:**  
+    `GET http://127.0.0.1:8000/api/v1/employees/import/notification/1`
+    
+  - **Failure Notification:**  
+    `GET http://127.0.0.1:8000/api/v1/employees/import/notification/1`
+
+- **Description:**  
+  Upon completing the import process (or encountering failures), the system notifies the user using the above endpoint.
+
+---
+
+## 5. Import Statistics Summary Email
+
+- **Trigger Condition:**  
+  If the import job completes with more than 1000 total records **or** if there are 10 or more failed records, the admin receives an import statistics summary email.
+
+- **Admin Email:**  
+  `shariya873@gmail.com`
+
+- **Statistics Endpoint:**  
+  `GET http://127.0.0.1:8000/api/v1/employees/import/stattiscits/1`
+
+- **Response Object Keys:**
+  - `user_name`
+  - `import_status`
+  - `total_records`
+  - `processed_records`
+  - `failed_records`
+  - `success_rate`
+  - `duration`
+  - `records_per_second`
+
+---
+
+## 6. Salary Update Logs
+
+- **Description:**  
+  During the import process, if there is an update to an employee's salary, the system tracks both the old and new salary values.
+
+- **Salary Logs Endpoint (List View):**  
+  `GET http://127.0.0.1:8000/api/v1/employees/salery-logs`
+
+This endpoint provides a list view of the salary update logs.
+
 ---
 
 ## Testing
