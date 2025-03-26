@@ -7,7 +7,7 @@ A comprehensive Laravel-based system for managing organizations, teams, and empl
 - [Configuration](#configuration)
 - [Features](#features)
  - [API Management with Sanctum](#api-management-with-sanctum)
-  - [Role And Access](#role-information)
+   - [Role And Access](#role-information)
   - [Eloquent Relationships & Data Aggregation](#eloquent-relationships--data-aggregation)
   - [Event-Driven Architecture & Background Processing](#event-driven-architecture--background-processing)
   - [PDF Reporting Package](#pdf-reporting-package)
@@ -1421,53 +1421,202 @@ DELETE /api/v1/employee/{id}
 _All endpoints in this section require authentication._
 
 - **Average Salary per Team:**  
-  **Endpoint:** `GET /api/v1/reports/teams/salary`  
+  **Endpoint:** 
+```
+GET/api/v1/reports/teams/salary
+```
   **Description:**  
   Calculates the average salary per team and returns a summary with overall averages.
 
   **Response:**
   ```json
   {
+    "success": true,
     "data": {
-      "teams": [
-        {
-          "id": 1,
-          "name": "Team A",
-          "average_salary": 5000.00
+        "teams": [
+            {
+                "id": 1,
+                "name": "Software Development",
+                "average_salary": 126871.32
+            },
+            {
+                "id": 2,
+                "name": "Marketing",
+                "average_salary": 131474.41
+            },
+            {
+                "id": 3,
+                "name": "Risk Management",
+                "average_salary": 130017.28
+            },
+            {
+                "id": 4,
+                "name": "Customer Support",
+                "average_salary": 129997.04
+            },
+            {
+                "id": 5,
+                "name": "Research & Development",
+                "average_salary": 121824.32
+            },
+            {
+                "id": 6,
+                "name": "Sales",
+                "average_salary": 115521
+            },
+            {
+                "id": 7,
+                "name": "Human Resources",
+                "average_salary": 113592.73
+            },
+            {
+                "id": 8,
+                "name": "Data Analytics",
+                "average_salary": 115280.84
+            },
+            {
+                "id": 9,
+                "name": "Public Relations",
+                "average_salary": 128785.62
+            },
+            {
+                "id": 10,
+                "name": "Cybersecurity",
+                "average_salary": 123022.14
+            },
+            {
+                "id": 11,
+                "name": "Cloud Infrastructure",
+                "average_salary": 120708.83
+            },
+            {
+                "id": 12,
+                "name": "Product Management",
+                "average_salary": 114652.6
+            },
+            {
+                "id": 13,
+                "name": "Operations",
+                "average_salary": 122283.56
+            },
+            {
+                "id": 14,
+                "name": "IT Support",
+                "average_salary": 129984.66
+            },
+            {
+                "id": 15,
+                "name": "Logistics",
+                "average_salary": 115298.11
+            },
+            {
+                "id": 16,
+                "name": "Legal Compliance",
+                "average_salary": 112009.32
+            },
+            {
+                "id": 17,
+                "name": "Business Intelligence",
+                "average_salary": 117018.05
+            },
+            {
+                "id": 18,
+                "name": "Financial Planning",
+                "average_salary": 135090.73
+            },
+            {
+                "id": 19,
+                "name": "Customer Relations",
+                "average_salary": 129644.79
+            },
+            {
+                "id": 20,
+                "name": "UX/UI Design",
+                "average_salary": 130600.45
+            }
+        ],
+        "summary": {
+            "total_teams": 20,
+            "overall_average": 123183.89
         }
-      ],
-      "summary": {
-        "total_teams": 1,
-        "overall_average": 5000.00
-      }
     },
     "message": "Avarage Salery Per Employee"
-  }
+}
   ```
 
 - **Employees per Organization:**  
-  **Endpoint:** `GET /api/v1/reports/organizations/headcount`  
+  **Endpoint:** 
+
+```
+GET /api/v1/reports/organizations/headcount
+```
   **Description:**  
   Returns the count of employees per organization along with a summary of total employees and organizations.
 
   **Response:**
   ```json
-  {
+{
+    "success": true,
     "data": {
-      "organization": [
-        {
-          "id": 1,
-          "name": "Organization One",
-          "employee_count": 10
+        "organization": [
+            {
+                "id": 1,
+                "name": "TechCorp",
+                "employee_count": 188
+            },
+            {
+                "id": 2,
+                "name": "FinSolve",
+                "employee_count": 106
+            },
+            {
+                "id": 3,
+                "name": "HealthPlus",
+                "employee_count": 111
+            },
+            {
+                "id": 4,
+                "name": "EduNation",
+                "employee_count": 133
+            },
+            {
+                "id": 5,
+                "name": "GreenEnergy",
+                "employee_count": 109
+            },
+            {
+                "id": 6,
+                "name": "Foodies",
+                "employee_count": 49
+            },
+            {
+                "id": 7,
+                "name": "AutoMotiveX",
+                "employee_count": 111
+            },
+            {
+                "id": 8,
+                "name": "RetailGiant",
+                "employee_count": 123
+            },
+            {
+                "id": 9,
+                "name": "BuildTech",
+                "employee_count": 132
+            },
+            {
+                "id": 10,
+                "name": "CloudNet",
+                "employee_count": 122
+            }
+        ],
+        "summary": {
+            "total_organizations": 10,
+            "total_employees": 1184
         }
-      ],
-      "summary": {
-        "total_organizations": 1,
-        "total_employees": 10
-      }
     },
     "message": "Organization Wise Employess"
-  }
+}
   ```
 
 ---
