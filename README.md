@@ -7,6 +7,7 @@ A comprehensive Laravel-based system for managing organizations, teams, and empl
 - [Configuration](#configuration)
 - [Features](#features)
  - [API Management with Sanctum](#api-management-with-sanctum)
+  - [Role And Access](#role-information)
   - [Eloquent Relationships & Data Aggregation](#eloquent-relationships--data-aggregation)
   - [Event-Driven Architecture & Background Processing](#event-driven-architecture--background-processing)
   - [PDF Reporting Package](#pdf-reporting-package)
